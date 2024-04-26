@@ -1,13 +1,13 @@
-const LoadPhone = async (searchText) => {
+const LoadPhone = async (searchText, isShowAll) => {
     const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`);
 
     const data = await res.json();
     const phones = data.data
     // console.log(phones)
-    displayPhones(phones);
+    displayPhones(phones, isShowAll);
 }
 
-const displayPhones = phones => {
+const displayPhones = (phones, isShowAll) => {
     // step 1 div name set kora 
     const phoneContainer = document.getElementById('phone-container')
 
@@ -16,19 +16,23 @@ const displayPhones = phones => {
 
     // show all button display container
     const showAllButtonContainer = document.getElementById("show-all-container")
-    if (phones.length > 10) {
+    if (phones.length > 10 && !isShowAll) {
         showAllButtonContainer.classList.remove('hidden')
     }
     else {
         showAllButtonContainer.classList.add('hidden')
     }
+    console.log('is show all phone mela', isShowAll)
+    if(!isShowAll){
+        phones = phones.slice(0, 10);
+    }
 
 
     //  display only first 10 phone
-    phones = phones.slice(0, 10)
+    // phones = phones.slice(0, 10)
 
     phones.forEach(phone => {
-        console.log(phone)
+        // console.log(phone)
 
         // step 2 create a div banano
         const phoneCard = document.createElement('div')
@@ -57,13 +61,13 @@ const displayPhones = phones => {
 
 // handel Search button 
 
-const handleSearchButton = () => {
+const handleSearchButton = (isShowAll) => {
     toggleLoadingSpinner( true);
     // console.log('guta dice khuja dhor ')
     const searchFild = document.getElementById('search-field');
     const searchText = searchFild.value;
     console.log(searchText)
-    LoadPhone(searchText)
+    LoadPhone(searchText, isShowAll)
 }
 
 const toggleLoadingSpinner = (isLoader) => {
@@ -76,7 +80,10 @@ const toggleLoadingSpinner = (isLoader) => {
     }
 }
 
-
+// handleShowAll button open
+    const handleShowAll = () => {
+        handleSearchButton(true)
+    }
 
 // LoadPhone()
 
