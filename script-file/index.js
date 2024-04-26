@@ -1,4 +1,4 @@
-const LoadPhone = async (searchText, isShowAll) => {
+const LoadPhone = async (searchText = 11, isShowAll) => {
     const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`);
 
     const data = await res.json();
@@ -22,7 +22,7 @@ const displayPhones = (phones, isShowAll) => {
     else {
         showAllButtonContainer.classList.add('hidden')
     }
-    console.log('is show all phone mela', isShowAll)
+    // console.log('is show all phone mela', isShowAll)
     if(!isShowAll){
         phones = phones.slice(0, 10);
     }
@@ -46,7 +46,7 @@ const displayPhones = (phones, isShowAll) => {
             }</h2>
             <p>${phone.slug}</p>
             <div class="card-actions justify-end">
-                <button class="btn btn-primary">Buy Now</button>
+                <button onclick="handelShowDetails('${phone.slug}')" class="btn btn-primary">Show Details</button>
             </div>
         </div>
     ` ;
@@ -59,6 +59,43 @@ const displayPhones = (phones, isShowAll) => {
 }
 
 
+
+//  Show Details container
+
+const handelShowDetails = async (id) => {
+    // console.log("hdkghgkhfdgh" , id)
+    // load single data 
+    const res = await  fetch (` https://openapi.programming-hero.com/api/phone/${id} `);
+    const  data = await res.json();
+    const phone = data.data;
+    
+    showAllDetailsModal(phone);
+}
+
+const showAllDetailsModal = (phone) => {
+    console.log(phone)
+    const showDetailsPhoneName = document.getElementById('show-details-phone-name');
+    showDetailsPhoneName.innerText = phone.name ;
+
+    const showDetailsContainer = document.getElementById("show-details-container");
+    showDetailsContainer.innerHTML =   `
+    <img src="${phone.image}" alt="">
+    <h3> <span class="text-xl font-semibold">brand:</span>   ${phone.brand}</h3>
+    <h3><span class="text-xl font-semibold">storage :</span>  ${phone.mainFeatures.storage }</h3>
+    <h3><span class="text-xl font-semibold">display size:</span>  ${phone.mainFeatures.displaySize }</h3>
+    <h3><span class="text-xl font-semibold">chipSet:</span>  ${phone.mainFeatures.chipSet }</h3>
+    <h3><span class="text-xl font-semibold">memory:</span>  ${phone.mainFeatures.memory }</h3>
+    <h3><span class="text-xl font-semibold">slug:</span> ${phone.slug}</h3>
+    <h3><span class="text-xl font-semibold">releaseDate:</span> ${phone.releaseDate }</h3>
+    <h3><span class="text-xl font-semibold">GPS:</span> ${phone.others.GPS }</h3>
+    `;
+
+
+    show_details_modal.showModal()
+}
+
+
+
 // handel Search button 
 
 const handleSearchButton = (isShowAll) => {
@@ -66,7 +103,7 @@ const handleSearchButton = (isShowAll) => {
     // console.log('guta dice khuja dhor ')
     const searchFild = document.getElementById('search-field');
     const searchText = searchFild.value;
-    console.log(searchText)
+    // console.log(searchText)
     LoadPhone(searchText, isShowAll)
 }
 
@@ -85,5 +122,8 @@ const toggleLoadingSpinner = (isLoader) => {
         handleSearchButton(true)
     }
 
-// LoadPhone()
+
+
+
+LoadPhone()
 
