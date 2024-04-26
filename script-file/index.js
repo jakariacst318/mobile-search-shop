@@ -14,6 +14,19 @@ const displayPhones = phones => {
     // search korle search fild new item show korbe and  old delete 
     phoneContainer.textContent = ' ';
 
+    // show all button display container
+    const showAllButtonContainer = document.getElementById("show-all-container")
+    if(phones.length > 10){
+        showAllButtonContainer.classList.remove('hidden')
+    }
+    else{
+        showAllButtonContainer.classList.add('hidden')
+    }
+
+
+//  display only first 10 phone
+    phones = phones.slice(0,10)
+
     phones.forEach(phone => {
         console.log(phone)
 
