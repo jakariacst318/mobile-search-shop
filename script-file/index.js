@@ -16,16 +16,16 @@ const displayPhones = phones => {
 
     // show all button display container
     const showAllButtonContainer = document.getElementById("show-all-container")
-    if(phones.length > 10){
+    if (phones.length > 10) {
         showAllButtonContainer.classList.remove('hidden')
     }
-    else{
+    else {
         showAllButtonContainer.classList.add('hidden')
     }
 
 
-//  display only first 10 phone
-    phones = phones.slice(0,10)
+    //  display only first 10 phone
+    phones = phones.slice(0, 10)
 
     phones.forEach(phone => {
         console.log(phone)
@@ -47,15 +47,18 @@ const displayPhones = phones => {
         </div>
     ` ;
 
-    //  step 4 appendChild 
-    phoneContainer.appendChild(phoneCard)
+        //  step 4 appendChild 
+        phoneContainer.appendChild(phoneCard)
     });
+    // hide loading spinner
+    toggleLoadingSpinner( false);
 }
 
 
 // handel Search button 
 
 const handleSearchButton = () => {
+    toggleLoadingSpinner( true);
     // console.log('guta dice khuja dhor ')
     const searchFild = document.getElementById('search-field');
     const searchText = searchFild.value;
@@ -63,4 +66,17 @@ const handleSearchButton = () => {
     LoadPhone(searchText)
 }
 
-LoadPhone()
+const toggleLoadingSpinner = (isLoader) => {
+    const loadingSpinner = document.getElementById("loading-spinner")
+    if(isLoader){
+        loadingSpinner.classList.remove("hidden")
+    }
+    else{
+        loadingSpinner.classList.add("hidden")
+    }
+}
+
+
+
+// LoadPhone()
+

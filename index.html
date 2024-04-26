@@ -19,13 +19,19 @@
     </head>
 
     <main class="container mx-auto mt-10">
-
+        <!-- input field -->
         <section class="bg-zinc-900 p-4 m-4 rounded-lg">
             <input id="search-field" type="text" placeholder="Search phone" class="input input-bordered w-full max-w-xs" />
             <button onclick="handleSearchButton()" class="btn btn-accent">Search</button>
         </section>
 
         <section>
+            <div id="loading-spinner" class="flex justify-center items-center lg:h-64 h-44 hidden">
+                <!-- spanner / loader -->
+                <span class="loading loading-spinner text-primary"></span>
+            </div>
+
+            <!-- phone container -->
             <div id="phone-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <!-- <div class="card w-96 bg-gray-100 shadow-xl">
                     <figure><img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
@@ -39,6 +45,7 @@
                     </div>
                 </div> -->
             </div>
+
             <!-- show all button  -->
             <div id="show-all-container" class="hidden  flex justify-center">
                 <button class="btn btn-accent">Show All</button>
